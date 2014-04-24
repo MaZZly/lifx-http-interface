@@ -26,7 +26,16 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="0" selection-start="1649" selection-end="1649" vertical-scroll-proportion="-33.75" vertical-offset="0" max-vertical-offset="1005">
+            <state line="35" column="50" selection-start="1469" selection-end="1469" vertical-scroll-proportion="-21.875" vertical-offset="0" max-vertical-offset="1155">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jquery.minicolors.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/jquery.minicolors.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="108" column="19" selection-start="1905" selection-end="1905" vertical-scroll-proportion="0.0" vertical-offset="1475" max-vertical-offset="3960">
               <folding />
             </state>
           </provider>
@@ -35,7 +44,16 @@
       <file leaf-file-name="functionality.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/functionality.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="0" selection-start="686" selection-end="686" vertical-scroll-proportion="0.20816326" vertical-offset="0" max-vertical-offset="1225">
+            <state line="66" column="0" selection-start="2190" selection-end="2190" vertical-scroll-proportion="0.70612246" vertical-offset="125" max-vertical-offset="1425">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="20" selection-start="153" selection-end="153" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
               <folding />
             </state>
           </provider>
@@ -52,7 +70,12 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/js/jquery-2.1.0.min.js" />
+        <option value="$PROJECT_DIR$/js/jquery.minicolors.min.js" />
+        <option value="$PROJECT_DIR$/css/jquery.minicolors.css" />
+        <option value="$PROJECT_DIR$/css/bootstrap-switch.min.css" />
+        <option value="$PROJECT_DIR$/js/boostrap-switch.min.js" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/css/style.css" />
         <option value="$PROJECT_DIR$/js/functionality.js" />
       </list>
     </option>
@@ -121,6 +144,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lifx-http-interface" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lifx-http-interface" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -132,6 +169,13 @@
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="LayoutCode.rearrangeEntriesHTML" value="false" />
     <property name="LayoutCode.rearrangeEntriesJavaScript" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/css" />
+      <recent name="$PROJECT_DIR$/js" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -300,7 +344,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24978687" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12872975" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -336,25 +380,73 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/jquery-2.1.0.min.js">
+    <entry file="file://$PROJECT_DIR$/js/jquery.minicolors.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="19443" selection-start="83614" selection-end="83614" vertical-scroll-proportion="0.037128713" vertical-offset="0" max-vertical-offset="1212">
+        <state line="8" column="11223" selection-start="11453" selection-end="11453" vertical-scroll-proportion="0.0990099" vertical-offset="0" max-vertical-offset="1212">
           <folding>
             <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/jquery-2.1.0.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="11" selection-start="64182" selection-end="64182" vertical-scroll-proportion="0.037128713" vertical-offset="0" max-vertical-offset="1212">
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/bootstrap.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1212">
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/jquery.minicolors.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="108" column="19" selection-start="1905" selection-end="1905" vertical-scroll-proportion="0.0" vertical-offset="1475" max-vertical-offset="3960">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/bootstrap-switch.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="10027" selection-start="10997" selection-end="10997" vertical-scroll-proportion="0.259901" vertical-offset="0" max-vertical-offset="1212">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/bootstrap-switch.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="4984" selection-start="5954" selection-end="5954" vertical-scroll-proportion="0.259901" vertical-offset="0" max-vertical-offset="1212">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="0" selection-start="1649" selection-end="1649" vertical-scroll-proportion="-33.75" vertical-offset="0" max-vertical-offset="1005">
+        <state line="35" column="50" selection-start="1469" selection-end="1469" vertical-scroll-proportion="-21.875" vertical-offset="0" max-vertical-offset="1155">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="20" selection-start="153" selection-end="153" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/functionality.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="686" selection-end="686" vertical-scroll-proportion="0.20816326" vertical-offset="0" max-vertical-offset="1225">
+        <state line="66" column="0" selection-start="2190" selection-end="2190" vertical-scroll-proportion="0.70612246" vertical-offset="125" max-vertical-offset="1425">
           <folding />
         </state>
       </provider>

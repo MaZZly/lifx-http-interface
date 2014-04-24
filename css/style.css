@@ -1,0 +1,11 @@
+
+
+#colorBox input {
+    vertical-align: top;
+}
+
+.list-group-item .bootstrap-switch-wrapper {
+    float: right;
+    margin-top: -3px;
+    margin-right: -5px;
+}

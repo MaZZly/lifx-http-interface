@@ -4,8 +4,13 @@
     <title>LIFX control</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/jquery.minicolors.css">
+    <link rel="stylesheet" href="css/bootstrap-switch.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="js/jquery-2.1.0.min.js"></script>
+    <script src="js/jquery.minicolors.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-switch.min.js"></script>
     <script src="js/functionality.js"></script>
 </head>
 <body>
@@ -45,15 +50,20 @@
 <div class="container">
     <div class="col-sm-4">
         <h1>Lights</h1>
-        <ul id="lightList">
+        <div id="lightList" class="list-group">
 
-        </ul>
+        </div>
     </div>
     <div class="col-sm-4">
         <h1>Tags</h1>
-        <ul id="tagList">
+        <div id="tagList" class="list-group">
 
-        </ul>
+        </div>
+    </div>
+    <div id="colorBox" class="col-sm-4">
+        <h1>Color</h1>
+        <input id="colorWheel" type="text">
+        <input type="button" class="btn btn-default" value="Set">
     </div>
 </div>
 
