@@ -9,3 +9,10 @@
     margin-top: -3px;
     margin-right: -5px;
 }
+
+.editLabel, .tagLightList {
+    margin-left: 0.4em;
+}
+.active .editLabel {
+    color: #ffffff;
+}

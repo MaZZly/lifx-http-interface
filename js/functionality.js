@@ -12,6 +12,7 @@ var lifx = {
                     light.on ? toggle.attr('checked', 'checked') : ''
                     var tmp = $('<a>').data('lifx', light).addClass('list-group-item').attr('id', light.id)
                     tmp.append('<span>' + light.label + '</span>')
+                    tmp.append('<a href="#" class="editLabel"><span class="glyphicon glyphicon-pencil"></span></a>')
                     tmp.append(toggle)
                     $('#lightList').append(tmp)
                     $.each(light.tags, function (i, v) {
@@ -22,6 +23,7 @@ var lifx = {
                 $('#tagList').empty
                 $.each(lifx.tags, function (i, v) {
                     var tmp = $('<a>').text(v).addClass('list-group-item')
+//                    tmp.append('<a href="#" class="tagLightList"><span class="glyphicon glyphicon-list"></span></a> ')
                     $('#tagList').append(tmp)
                 })
 
@@ -93,6 +95,15 @@ $(function () {
         $.each(lifx.selected, function (i, light) {
             lifx.setColor(light.id, hsl, kelvin)
         })
+    })
 
+    $(document).on('click','.editLabel',function(e){
+        e.preventDefault()
+        var label = $(this).prev().text()
+        var newlabel = prompt('New label',label)
+        if (newlabel){
+            var id = $(this).parent().attr('id')
+            lifx.setLabel(id, newlabel)
+        }
     })
 })
