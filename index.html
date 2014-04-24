@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/jquery-2.1.0.min.js"></script>
     <script src="js/jquery.minicolors.min.js"></script>
+    <script src="js/snippets.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-switch.min.js"></script>
     <script src="js/functionality.js"></script>
@@ -63,7 +64,10 @@
     <div id="colorBox" class="col-sm-4">
         <h1>Color</h1>
         <input id="colorWheel" type="text">
-        <input type="button" class="btn btn-default" value="Set">
+        <input type="button" class="btn btn-default" value="Set" id="setColor">
+
+        <label>Color Temp</label>
+        <input id="colorTemp" type="range" name="kelvin" min="2500" max="10000">
     </div>
 </div>
 

@@ -2,19 +2,18 @@ var lifx = {
     base_url: window.localStorage['base_url'] ? window.localStorage['base_url'] : 'http://localhost:56780/',
     tags: [],
     lights: [],
+    selected: [],
     getLights: function () {
         $.get(this.base_url + 'lights.json', function (response) {
-//            Go through all the lights
                 lifx.lights = response
                 $('#lightList').empty()
                 $.each(response, function (i, light) {
                     var toggle = $('<input>').attr('type', 'checkbox').addClass('lightToggle pull-right')
                     light.on ? toggle.attr('checked', 'checked') : ''
-                    var tmp = $('<a>').data('lifx', light).text(light.label).addClass('list-group-item').attr('id', light.id)
+                    var tmp = $('<a>').data('lifx', light).addClass('list-group-item').attr('id', light.id)
+                    tmp.append('<span>' + light.label + '</span>')
                     tmp.append(toggle)
                     $('#lightList').append(tmp)
-
-//                  Tags in a light
                     $.each(light.tags, function (i, v) {
                         lifx.tags.push(v)
                     })
@@ -28,6 +27,13 @@ var lifx = {
 
                 if (lifx.lights.length == 1) {
                     $('#lightList a').addClass('active')
+                    lifx.selected = lifx.lights
+
+                    var hsb = lifx.lights[0].color
+                    var rgb = hsbToRgb(hsb.hue, hsb.saturation, hsb.brightness)
+                    var hex = rgbToHex(rgb.red, rgb.green, rgb.blue)
+                    $('#colorWheel').minicolors('value', hex);
+                    $('#colorTemp').val(lifx.lights[0].color.kelvin)
                 }
 
                 $('.lightToggle').bootstrapSwitch({
@@ -51,6 +57,21 @@ var lifx = {
         $.put(this.base_url + 'lights/' + selector + '/on.json', function (response) {
 
         })
+    },
+    setColor: function (selector, hsl, kelvin, duration) {
+        $.put(this.base_url + 'lights/' + selector + '/color.json', {
+            hue: hsl.hue * 360,
+            saturation: hsl.sat,
+            brightness: hsl.bri,
+            kelvin: kelvin ? kelvin : 10000,
+            duration: duration ? duration : '0.3s'
+        })
+    }, setLabel: function (id, label) {
+        $.put(this.base_url + 'lights/' + id + '/label.json', {
+            label: label
+        }, function (response) {
+            $('#' + response.id + '> span').text(response.label)
+        })
     }
 }
 
@@ -58,33 +79,20 @@ var lifx = {
 $(function () {
     lifx.getLights()
 
-
     $('#colorWheel').minicolors({
         inline: true
     })
+
+
+    $('#setColor').click(function (e) {
+        e.preventDefault()
+        var color = $('#colorWheel').minicolors('rgbObject')
+        var hsl = rgbToHsb(color.r, color.g, color.b)
+        var kelvin = $('#colorTemp').val()
+
+        $.each(lifx.selected, function (i, light) {
+            lifx.setColor(light.id, hsl, kelvin)
+        })
+
+    })
 })
-
-
-/* Extend jQuery with functions for PUT and DELETE requests. */
-function _ajax_request(url, data, callback, type, method) {
-    if (jQuery.isFunction(data)) {
-        callback = data;
-        data = {};
-    }
-    return jQuery.ajax({
-        type: method,
-        url: url,
-        data: data,
-        success: callback,
-        dataType: type
-        });
-}
-
-jQuery.extend({
-    put: function(url, data, callback, type) {
-        return _ajax_request(url, data, callback, type, 'PUT');
-    },
-    delete_: function(url, data, callback, type) {
-        return _ajax_request(url, data, callback, type, 'DELETE');
-    }
-});
