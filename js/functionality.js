@@ -99,7 +99,7 @@ var colorwheel = {
         })
     },
     getColor: function () {
-        var color = $('#colorWheel').minicolors('rgbObject')
+        var color = $('#colorWhffeel').minicolors('rgbObject')
         var hsb = rgbToHsb(color.r, color.g, color.b)
         return hsb
     },
@@ -120,6 +120,19 @@ $(function () {
         $.each(lifx.selected, function (i, selector) {
             lifx.setColor(selector, hsb, kelvin)
         })
+    })
+
+    $('#host').val(lifx.base_url)
+    $('#saveSettings').click(function(e){
+        e.preventDefault()
+        var newURL = $('#host').val()
+        $.get(newURL+'/lights.json').success(function(result){
+            window.localStorage['base_url'] = newURL
+            window.location.reload()
+        }).error(function(){
+            alert('No response..')
+        })
+
     })
 
     $(document).on('click', '.editLabel', function (e) {

@@ -36,7 +36,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#">
+                    <a href="#" data-toggle="modal" data-target="#settings">
                         <span class="glyphicon glyphicon-cog"></span>
                         Settings
                     </a>
@@ -74,6 +74,38 @@
         <input id="colorTemp" type="range" name="kelvin" min="2500" max="10000">
     </div>
 </div>
+
+
+<div id="settings" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Settings</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline" role="form">
+                    <div class="form-group">
+                        <label>Endpoint</label>
+                        <input type="text" class="form-control" id="host" placeholder="HOST:PORT">
+                        <button id="saveSettings" class="btn btn-success">
+                           <span class="glyphicon glyphicon-floppy-disk"></span> Save
+                        </button>
+                    </div>
+                    <span class="help-block">
+                        <span class="glyphicon glyphicon-info-sign"></span> Where is lifx-http running?
+                    </span>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 
 </body>
