@@ -14,8 +14,8 @@ Open index.html in a browser or have a webserver serve it. Your choice.
 - light on/off/color
 - tags color
 - Selecting lights/tags
+- tag on/off switch
+- Settings for host:port of lifx-http
 
 **Roadmap:**
-- tag on/off switch
-- Settings for host:port of lifx-http (currently defaults to localhost:56780)
 - Add/remove tags for light
