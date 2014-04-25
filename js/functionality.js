@@ -110,7 +110,7 @@ var colorwheel = {
         return hsb
     },
     setColorandTemp: function (color) {
-        var rgb = hsbToRgb(color.hue, color.saturation, color.brightness)
+        var rgb = hsbToRgb(color.hue / 360, color.saturation, color.brightness)
         var hex = rgbToHex(rgb.red, rgb.green, rgb.blue)
         $('#colorWheel').minicolors('value', hex);
         $('#colorTemp').val(color.kelvin)
