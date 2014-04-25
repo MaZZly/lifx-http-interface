@@ -12,9 +12,8 @@ Open index.html in a browser or have a webserver serve it. Your choice.
 **Currently working:**
 - Edit light label
 - light on/off/color
-- tags color
+- tags on/off/color
 - Selecting lights/tags
-- tag on/off switch
 - Settings for host:port of lifx-http
 
 **Roadmap:**
