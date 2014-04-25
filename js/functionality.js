@@ -106,4 +106,16 @@ $(function () {
             lifx.setLabel(id, newlabel)
         }
     })
+
+//    Make bootstrap-switch buttons react when clicking on "white" part of switch also
+    $(document).on('click','.bootstrap-switch-label',function(e){
+        e.preventDefault()
+        console.log('hai')
+        var parent = $(this).parent().parent()
+        if (parent.hasClass('bootstrap-switch-on')){
+            $(this).prev().click()
+        } else {
+            $(this).next().click()
+        }
+    })
 })
