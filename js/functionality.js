@@ -1,31 +1,45 @@
 var lifx = {
     base_url: window.localStorage['base_url'] ? window.localStorage['base_url'] : 'http://localhost:56780/',
-    tags: [],
-    lights: [],
+    tags: {},
+    lights: {},
     selected: [],
     getLights: function () {
         $.get(this.base_url + 'lights.json', function (response) {
-                lifx.lights = response
                 $('#lightList').empty()
                 $.each(response, function (i, light) {
                     var toggle = $('<input>').attr('type', 'checkbox').addClass('lightToggle pull-right')
                     light.on ? toggle.attr('checked', 'checked') : ''
-                    var tmp = $('<a>').data('lifx', light).addClass('list-group-item light').attr('id', light.id)
+                    var tmp = $('<a>').addClass('list-group-item light').attr('id', light.id)
                     tmp.append('<span>' + light.label + '</span>')
                     tmp.append('<a href="#" class="editLabel"><span class="glyphicon glyphicon-pencil"></span></a>')
                     tmp.append(toggle)
                     $('#lightList').append(tmp)
-                    $.each(light.tags, function (i, v) {
-                        lifx.tags.push(v)
+                    $.each(light.tags, function (i, tag) {
+                        lifx.tags[tag] = {}
+                    })
+                    lifx.lights[light.id] = light
+                })
+
+                $.each(lifx.lights, function (id, light) {
+                    $.each(light.tags, function (u, tag) {
+                        lifx.tags[tag][id] = light
                     })
                 })
 
                 $('#tagList').empty
-                $.each(lifx.tags, function (i, v) {
-                    var tmp = $('<a>').text(v).addClass('list-group-item tag').attr('id', 'tag:' + v)
-//                    tmp.append('<a href="#" class="tagLightList"><span class="glyphicon glyphicon-list"></span></a> ')
+                $.each(lifx.tags, function (tag, lights) {
+                    var allOn = true
+                    $.each(lights, function (id, light) {
+                        light.on ? '' : allOn = false
+                    })
+                    var toggle = $('<input>').attr('type', 'checkbox').addClass('lightToggle pull-right')
+                    allOn ? toggle.attr('checked', 'checked') : ''
+                    var tmp = $('<a>').addClass('list-group-item tag').attr('id', 'tag:' + tag)
+                    tmp.append('<span>' + tag + '</span>')
+                    tmp.append(toggle)
                     $('#tagList').append(tmp)
                 })
+
 
                 if (lifx.lights.length == 1) {
                     $('#lightList a').addClass('active')
@@ -47,6 +61,7 @@ var lifx = {
                         state ? lifx.turnOn(selector) : lifx.turnOff(selector)
                     }
                 });
+
             }
         )
     },
@@ -132,7 +147,7 @@ $(function () {
             item.addClass('active')
             lifx.selected = [item.attr('id')]
         }
-        if ($('.list-group-item.active').length!=0) {
+        if ($('.list-group-item.active').length != 0) {
             $('#colorBox').slideDown()
         } else {
             $('#colorBox').slideUp()
@@ -142,7 +157,6 @@ $(function () {
 //    Make bootstrap-switch buttons react when clicking on "white" part of switch also
     $(document).on('click', '.bootstrap-switch-label', function (e) {
         e.preventDefault()
-        console.log('hai')
         var parent = $(this).parent().parent()
         if (parent.hasClass('bootstrap-switch-on')) {
             $(this).prev().click()
