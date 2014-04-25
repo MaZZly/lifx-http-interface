@@ -11,10 +11,11 @@ Open index.html in a browser or have a webserver serve it. Your choice.
 
 **Currently working:**
 - Edit light label
-- Individual light on/off/color (Provided 1 light setup, light selection not yet implemented)
+- light on/off/color
+- tags color
+- Selecting lights/tags
 
 **Roadmap:**
-- Selecting lights
+- tag on/off switch
 - Settings for host:port of lifx-http (currently defaults to localhost:56780)
-- tags on/off/color
 - Add/remove tags for light
