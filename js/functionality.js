@@ -92,8 +92,9 @@ var lifx = {
     }, setLabel: function (id, label) {
         $.put(this.base_url + 'lights/' + id + '/label.json', {
             label: label
-        }, function (response) {
-            $('#' + response.id + '> span').text(response.label)
+        }, function (light) {
+            $('#' + light.id + '> span').text(light.label)
+            lifx.lights[light.id] = light
         })
     }
 }
