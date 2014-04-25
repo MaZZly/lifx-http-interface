@@ -62,14 +62,12 @@ var lifx = {
     setLight: function (selector, state) {
         var state = state ? 'on' : 'off'
         $.put(this.base_url + 'lights/' + selector + '/' + state + '.json', function (response) {
-            if (!selector.contains('tag')) {
-                response = [response]
-            }
+            response = !(response instanceof Array) ? [response] : response
             $.each(response, function (i, light) {
                 lifx.lights[light.id] = light
                 $('#' + light.id + ' .lightToggle').bootstrapSwitch('state', light.on, true)
-                lifx.setTagStates()
             })
+            lifx.setTagStates()
         })
     },
     setTagStates: function () {
@@ -88,6 +86,19 @@ var lifx = {
             brightness: hsb.bri,
             kelvin: kelvin ? kelvin : 10000,
             duration: duration ? duration : '0.3s'
+        }, function (response) {
+//            Special case.. LIFX doesnt return new color instantly due to duration..
+//              If successful response set color ourselves
+            response = !(response instanceof Array) ? [response] : response
+            $.each(response, function (i, light) {
+                lifx.lights[light.id] = light
+                lifx.lights[light.id].color = {
+                    hue: hsb.hue * 360,
+                    saturation: hsb.sat,
+                    brightness: hsb.bri,
+                    kelvin: kelvin
+                }
+            })
         })
     }, setLabel: function (id, label) {
         $.put(this.base_url + 'lights/' + id + '/label.json', {
