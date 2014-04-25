@@ -5,7 +5,7 @@ var lifx = {
     selected: [],
     getLights: function () {
         $.get(this.base_url + 'lights.json', function (response) {
-                $('#lightList').empty()
+                $('#lights').empty()
                 $.each(response, function (i, light) {
                     var toggle = $('<input>').attr('type', 'checkbox').addClass('lightToggle pull-right')
                     light.on ? toggle.attr('checked', 'checked') : ''
@@ -13,66 +13,72 @@ var lifx = {
                     tmp.append('<span>' + light.label + '</span>')
                     tmp.append('<a href="#" class="editLabel"><span class="glyphicon glyphicon-pencil"></span></a>')
                     tmp.append(toggle)
-                    $('#lightList').append(tmp)
+                    $('#lights').append(tmp)
                     $.each(light.tags, function (i, tag) {
-                        lifx.tags[tag] = {}
+                        lifx.tags[tag] = []
                     })
                     lifx.lights[light.id] = light
                 })
 
                 $.each(lifx.lights, function (id, light) {
                     $.each(light.tags, function (u, tag) {
-                        lifx.tags[tag][id] = light
+                        lifx.tags[tag].push(id)
                     })
                 })
 
-                $('#tagList').empty
+                $('#tags').empty
                 $.each(lifx.tags, function (tag, lights) {
                     var allOn = true
-                    $.each(lights, function (id, light) {
-                        light.on ? '' : allOn = false
+                    $.each(lights, function (i, id) {
+                        lifx.lights[id].on ? '' : allOn = false
                     })
                     var toggle = $('<input>').attr('type', 'checkbox').addClass('lightToggle pull-right')
                     allOn ? toggle.attr('checked', 'checked') : ''
                     var tmp = $('<a>').addClass('list-group-item tag').attr('id', 'tag:' + tag)
                     tmp.append('<span>' + tag + '</span>')
                     tmp.append(toggle)
-                    $('#tagList').append(tmp)
+                    $('#tags').append(tmp)
                 })
 
-
-                if (lifx.lights.length == 1) {
-                    $('#lightList a').addClass('active')
-                    lifx.selected.push(lifx.lights[0].id)
-
-                    var hsb = lifx.lights[0].color
-                    var rgb = hsbToRgb(hsb.hue, hsb.saturation, hsb.brightness)
-                    var hex = rgbToHex(rgb.red, rgb.green, rgb.blue)
-                    $('#colorWheel').minicolors('value', hex);
-                    $('#colorTemp').val(lifx.lights[0].color.kelvin)
+                if (Object.keys(lifx.lights).length == 1) {
+                    $('#lights a').addClass('active')
+                    var id = $('.list-group-item.active').attr('id')
+                    lifx.selected.push(id)
+                    colorwheel.setColorandTemp(lifx.lights[id].color)
                 }
 
                 $('.lightToggle').bootstrapSwitch({
-                    animate: false,
                     size: 'small',
                     onSwitchChange: function (e, state) {
+                        e.preventDefault()
                         var selector = $(this).parents('a').first().attr('id')
-                        console.log(selector)
-                        state ? lifx.turnOn(selector) : lifx.turnOff(selector)
+                        state ? lifx.setLight(selector, true) : lifx.setLight(selector, false)
                     }
                 });
 
             }
         )
     },
-    turnOff: function (selector) {
-        $.put(this.base_url + 'lights/' + selector + '/off.json', function (response) {
-
+    setLight: function (selector, state) {
+        var state = state ? 'on' : 'off'
+        $.put(this.base_url + 'lights/' + selector + '/' + state + '.json', function (response) {
+            if (!selector.contains('tag')) {
+                response = [response]
+            }
+            $.each(response, function (i, light) {
+                lifx.lights[light.id] = light
+                $('#' + light.id + ' .lightToggle').bootstrapSwitch('state', light.on, true)
+                lifx.setTagStates()
+            })
         })
     },
-    turnOn: function (selector) {
-        $.put(this.base_url + 'lights/' + selector + '/on.json', function (response) {
-
+    setTagStates: function () {
+        $.each(lifx.tags, function (tag, lights) {
+            var allOn = true
+            $.each(lights, function (i, id) {
+                lifx.lights[id].on ? '' : allOn = false
+            })
+            $('#tag\\:' + tag + ' .lightToggle').bootstrapSwitch('state', allOn, true)
         })
     },
     setColor: function (selector, hsb, kelvin, duration) {
@@ -99,9 +105,15 @@ var colorwheel = {
         })
     },
     getColor: function () {
-        var color = $('#colorWhffeel').minicolors('rgbObject')
+        var color = $('#colorWheel').minicolors('rgbObject')
         var hsb = rgbToHsb(color.r, color.g, color.b)
         return hsb
+    },
+    setColorandTemp: function (color) {
+        var rgb = hsbToRgb(color.hue, color.saturation, color.brightness)
+        var hex = rgbToHex(rgb.red, rgb.green, rgb.blue)
+        $('#colorWheel').minicolors('value', hex);
+        $('#colorTemp').val(color.kelvin)
     },
     getTemp: function () {
         return $('#colorTemp').val()
@@ -123,13 +135,13 @@ $(function () {
     })
 
     $('#host').val(lifx.base_url)
-    $('#saveSettings').click(function(e){
+    $('#saveSettings').click(function (e) {
         e.preventDefault()
         var newURL = $('#host').val()
-        $.get(newURL+'/lights.json').success(function(result){
+        $.get(newURL + '/lights.json').success(function (result) {
             window.localStorage['base_url'] = newURL
             window.location.reload()
-        }).error(function(){
+        }).error(function () {
             alert('No response..')
         })
 
@@ -165,16 +177,15 @@ $(function () {
         } else {
             $('#colorBox').slideUp()
         }
+        if ($('.list-group-item.active').length == 1) {
+            var id = $('.list-group-item.active').attr('id')
+            colorwheel.setColorandTemp(lifx.lights[id].color)
+        }
     })
 
 //    Make bootstrap-switch buttons react when clicking on "white" part of switch also
     $(document).on('click', '.bootstrap-switch-label', function (e) {
         e.preventDefault()
-        var parent = $(this).parent().parent()
-        if (parent.hasClass('bootstrap-switch-on')) {
-            $(this).prev().click()
-        } else {
-            $(this).next().click()
-        }
+        $(this).next().next().bootstrapSwitch('toggleState')
     })
 })

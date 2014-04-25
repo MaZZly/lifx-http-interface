@@ -24,7 +24,6 @@ jQuery.extend({
 });
 
 
-
 // From:http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
 // Modified a bit to return objects instead of arrays
 function rgbToHsb(r, g, b) {
@@ -90,12 +89,19 @@ function hsbToRgb(h, s, b) {
     }
 
     return {
-        red: r*255,
-        green: g*255,
-        blue: b*255
+        red: r * 255,
+        green: g * 255,
+        blue: b * 255
     }
 }
 
-function rgbToHex(r,g,b) {
-    return ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).substr(1);
+function rgbToHex(r, g, b) {
+    return ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).substr(1, 6);
+}
+
+//http://stackoverflow.com/questions/1789945/how-can-i-check-if-one-string-contains-another-substring-in-javascript
+if (typeof String.prototype.contains === 'undefined') {
+    String.prototype.contains = function (it) {
+        return this.indexOf(it) != -1;
+    };
 }
