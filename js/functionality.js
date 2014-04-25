@@ -10,7 +10,7 @@ var lifx = {
                 $.each(response, function (i, light) {
                     var toggle = $('<input>').attr('type', 'checkbox').addClass('lightToggle pull-right')
                     light.on ? toggle.attr('checked', 'checked') : ''
-                    var tmp = $('<a>').data('lifx', light).addClass('list-group-item').attr('id', light.id)
+                    var tmp = $('<a>').data('lifx', light).addClass('list-group-item light').attr('id', light.id)
                     tmp.append('<span>' + light.label + '</span>')
                     tmp.append('<a href="#" class="editLabel"><span class="glyphicon glyphicon-pencil"></span></a>')
                     tmp.append(toggle)
@@ -22,14 +22,14 @@ var lifx = {
 
                 $('#tagList').empty
                 $.each(lifx.tags, function (i, v) {
-                    var tmp = $('<a>').text(v).addClass('list-group-item')
+                    var tmp = $('<a>').text(v).addClass('list-group-item tag').attr('id', 'tag:' + v)
 //                    tmp.append('<a href="#" class="tagLightList"><span class="glyphicon glyphicon-list"></span></a> ')
                     $('#tagList').append(tmp)
                 })
 
                 if (lifx.lights.length == 1) {
                     $('#lightList a').addClass('active')
-                    lifx.selected = lifx.lights
+                    lifx.selected.push(lifx.lights[0].id)
 
                     var hsb = lifx.lights[0].color
                     var rgb = hsbToRgb(hsb.hue, hsb.saturation, hsb.brightness)
@@ -60,11 +60,11 @@ var lifx = {
 
         })
     },
-    setColor: function (selector, hsl, kelvin, duration) {
+    setColor: function (selector, hsb, kelvin, duration) {
         $.put(this.base_url + 'lights/' + selector + '/color.json', {
-            hue: hsl.hue * 360,
-            saturation: hsl.sat,
-            brightness: hsl.bri,
+            hue: hsb.hue * 360,
+            saturation: hsb.sat,
+            brightness: hsb.bri,
             kelvin: kelvin ? kelvin : 10000,
             duration: duration ? duration : '0.3s'
         })
@@ -83,11 +83,13 @@ var colorwheel = {
             inline: true
         })
     },
-    getColorAndTemp: function () {
+    getColor: function () {
         var color = $('#colorWheel').minicolors('rgbObject')
         var hsb = rgbToHsb(color.r, color.g, color.b)
-        var kelvin = $('#colorTemp').val()
-        return [hsb, kelvin]
+        return hsb
+    },
+    getTemp: function () {
+        return $('#colorTemp').val()
     }
 }
 
@@ -98,9 +100,10 @@ $(function () {
 
     $('#setColor').click(function (e) {
         e.preventDefault()
-        var hsb, kelvin = colorwheel.getColorAndTemp()
-        $.each(lifx.selected, function (i, light) {
-            lifx.setColor(light.id, hsb, kelvin)
+        var hsb = colorwheel.getColor()
+        var kelvin = colorwheel.getTemp()
+        $.each(lifx.selected, function (i, selector) {
+            lifx.setColor(selector, hsb, kelvin)
         })
     })
 
@@ -111,6 +114,23 @@ $(function () {
         if (newlabel) {
             var id = $(this).parent().attr('id')
             lifx.setLabel(id, newlabel)
+        }
+    })
+
+    $(document).on('click', '.list-group-item', function (e) {
+        var item = $(this)
+        if (e.ctrlKey) {
+            if (item.hasClass('active')) {
+                item.removeClass('active')
+                lifx.selected.pop(item.attr('id'))
+            } else {
+                item.addClass('active')
+                lifx.selected.push(item.attr('id'))
+            }
+        } else {
+            $('.list-group-item').removeClass('active')
+            item.addClass('active')
+            lifx.selected = [item.attr('id')]
         }
     })
 
