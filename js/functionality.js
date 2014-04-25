@@ -77,42 +77,49 @@ var lifx = {
     }
 }
 
+var colorwheel = {
+    init: function () {
+        $('#colorWheel').minicolors({
+            inline: true
+        })
+    },
+    getColorAndTemp: function () {
+        var color = $('#colorWheel').minicolors('rgbObject')
+        var hsb = rgbToHsb(color.r, color.g, color.b)
+        var kelvin = $('#colorTemp').val()
+        return [hsb, kelvin]
+    }
+}
 
 $(function () {
     lifx.getLights()
-
-    $('#colorWheel').minicolors({
-        inline: true
-    })
+    colorwheel.init()
 
 
     $('#setColor').click(function (e) {
         e.preventDefault()
-        var color = $('#colorWheel').minicolors('rgbObject')
-        var hsl = rgbToHsb(color.r, color.g, color.b)
-        var kelvin = $('#colorTemp').val()
-
+        var hsb, kelvin = colorwheel.getColorAndTemp()
         $.each(lifx.selected, function (i, light) {
-            lifx.setColor(light.id, hsl, kelvin)
+            lifx.setColor(light.id, hsb, kelvin)
         })
     })
 
-    $(document).on('click','.editLabel',function(e){
+    $(document).on('click', '.editLabel', function (e) {
         e.preventDefault()
         var label = $(this).prev().text()
-        var newlabel = prompt('New label',label)
-        if (newlabel){
+        var newlabel = prompt('New label', label)
+        if (newlabel) {
             var id = $(this).parent().attr('id')
             lifx.setLabel(id, newlabel)
         }
     })
 
 //    Make bootstrap-switch buttons react when clicking on "white" part of switch also
-    $(document).on('click','.bootstrap-switch-label',function(e){
+    $(document).on('click', '.bootstrap-switch-label', function (e) {
         e.preventDefault()
         console.log('hai')
         var parent = $(this).parent().parent()
-        if (parent.hasClass('bootstrap-switch-on')){
+        if (parent.hasClass('bootstrap-switch-on')) {
             $(this).prev().click()
         } else {
             $(this).next().click()
