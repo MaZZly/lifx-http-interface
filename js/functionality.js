@@ -132,6 +132,11 @@ $(function () {
             item.addClass('active')
             lifx.selected = [item.attr('id')]
         }
+        if ($('.list-group-item.active').length!=0) {
+            $('#colorBox').slideDown()
+        } else {
+            $('#colorBox').slideUp()
+        }
     })
 
 //    Make bootstrap-switch buttons react when clicking on "white" part of switch also
