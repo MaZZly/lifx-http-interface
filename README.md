@@ -8,7 +8,12 @@ Usage
 ------------
 Open index.html in a browser or have a webserver serve it. Your choice.
 
+If you're running lifx-http anywhere other than ```localhost:56780``` go to settings on top right to specify endpoint
 
+
+
+Status
+------
 **Currently working:**
 - Edit light label
 - light on/off/color
