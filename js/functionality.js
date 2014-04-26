@@ -1,10 +1,10 @@
 var lifx = {
-    base_url: window.localStorage['base_url'] ? window.localStorage['base_url'] : 'http://localhost:56780/',
+    base_url: window.localStorage['base_url'] ? window.localStorage['base_url'] : 'http://localhost:56780',
     tags: {},
     lights: {},
     selected: [],
     getLights: function () {
-        $.get(this.base_url + 'lights.json', function (response) {
+        $.get(this.base_url + '/lights.json', function (response) {
                 $('#lights').empty()
                 $.each(response, function (i, light) {
                     var toggle = $('<input>').attr('type', 'checkbox').addClass('lightToggle pull-right')
@@ -26,7 +26,7 @@ var lifx = {
                     })
                 })
 
-                $('#tags').empty
+                $('#tags').empty()
                 $.each(lifx.tags, function (tag, lights) {
                     var allOn = true
                     $.each(lights, function (i, id) {
@@ -61,7 +61,7 @@ var lifx = {
     },
     setLight: function (selector, state) {
         var state = state ? 'on' : 'off'
-        $.put(this.base_url + 'lights/' + selector + '/' + state + '.json', function (response) {
+        $.put(this.base_url + '/lights/' + selector + '/' + state + '.json', function (response) {
             response = !(response instanceof Array) ? [response] : response
             $.each(response, function (i, light) {
                 lifx.lights[light.id] = light
@@ -80,7 +80,7 @@ var lifx = {
         })
     },
     setColor: function (selector, hsb, kelvin, duration) {
-        $.put(this.base_url + 'lights/' + selector + '/color.json', {
+        $.put(this.base_url + '/lights/' + selector + '/color.json', {
             hue: hsb.hue * 360,
             saturation: hsb.sat,
             brightness: hsb.bri,
@@ -101,7 +101,7 @@ var lifx = {
             })
         })
     }, setLabel: function (id, label) {
-        $.put(this.base_url + 'lights/' + id + '/label.json', {
+        $.put(this.base_url + '/lights/' + id + '/label.json', {
             label: label
         }, function (light) {
             $('#' + light.id + '> span').text(light.label)
@@ -147,16 +147,21 @@ $(function () {
     })
 
     $('#host').val(lifx.base_url)
-    $('#saveSettings').click(function (e) {
-        e.preventDefault()
+
+    $('#saveSettings').click(function () {
         var newURL = $('#host').val()
+
         $.get(newURL + '/lights.json').success(function (result) {
+            $('#settings').modal('hide')
             window.localStorage['base_url'] = newURL
-            window.location.reload()
+            lifx.base_url = newURL
+            lifx.getLights()
         }).error(function () {
             alert('No response..')
         })
-
+    })
+    $('#resetSettings').click(function () {
+        $('#host').val('http://localhost:56780')
     })
 
     $(document).on('click', '.editLabel', function (e) {
@@ -190,8 +195,10 @@ $(function () {
             $('#colorBox').slideUp()
         }
         if ($('.list-group-item.active').length == 1) {
-            var id = $('.list-group-item.active').attr('id')
-            colorwheel.setColorandTemp(lifx.lights[id].color)
+            var id = $('#lights .list-group-item.active').attr('id')
+            if (id) {
+                colorwheel.setColorandTemp(lifx.lights[id].color)
+            }
         }
     })
 
