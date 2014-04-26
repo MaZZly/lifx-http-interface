@@ -176,7 +176,7 @@ $(function () {
 
     $(document).on('click', '.list-group-item', function (e) {
         var item = $(this)
-        if (e.ctrlKey) {
+        if (e.ctrlKey || e.metaKey) {
             if (item.hasClass('active')) {
                 item.removeClass('active')
                 lifx.selected.pop(item.attr('id'))
