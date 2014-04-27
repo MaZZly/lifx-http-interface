@@ -30,3 +30,7 @@ body {
 .active .editLabel {
     color: #ffffff;
 }
+
+.navbar-brand img {
+    margin-top: -7px;
+}
