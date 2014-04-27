@@ -1,5 +1,6 @@
+var domain = document.domain ? document.domain: 'localhost'
 var lifx = {
-    base_url: window.localStorage['base_url'] ? window.localStorage['base_url'] : 'http://localhost:56780',
+    base_url: window.localStorage['base_url'] ? window.localStorage['base_url'] : 'http://' + domain + ':56780',
     tags: {},
     lights: {},
     selected: [],
@@ -161,7 +162,7 @@ $(function () {
         })
     })
     $('#resetSettings').click(function () {
-        $('#host').val('http://localhost:56780')
+        $('#host').val('http://' + domain + ':56780')
     })
 
     $(document).on('click', '.editLabel', function (e) {
